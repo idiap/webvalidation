@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+#Configure /etc files
+if [ "configure" = "$1" ]; then
+
+	# Fix permissions
+    chmod -R +x /usr/share/webvalidation/scripts/cgi
+fi

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+#Upgrade
+if [ "upgrade" = "$1"  ]; then
+
+	if [ -e "/usr/share/webvalidation" ]
+	then	
+		find /usr/share/webvalidation -iname "*.pl" | xargs rm > /dev/null	
+	fi		
+fi

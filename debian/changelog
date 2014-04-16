@@ -1,0 +1,9 @@
+webvalidation (2.0.0RC1) stable; urgency=low
+
+  * Initial packaging
+  
+  * Add the data preparation service
+
+  * Prepare for git hub
+
+ -- Alexandre Nanchen <alexandre.nanchen@idiap.ch>  Mon, 14 April 2014 16:30:00 +0100

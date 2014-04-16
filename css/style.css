@@ -1,0 +1,232 @@
+
+/* ======== DomainName.com Screen Stylesheet ::
+Author: 	Name, Website
+Created:	Date Intitals
+Updated:	Date Initials
+TOC:		Resets; HTML & Body; Links; Typography; Lists; Tables;
+			Classes; Template; Navigation; Page Styles; Forms; Other;
+----------------------------------------------------------------- */
+
+/* ======== Resets ::
+----------------------------------------------------------------- */
+body, address, blockquote, h1, h2, h3, h4, h5, h6, p, pre, dl, ol,
+ul, dd, dt, li, fieldset, form {margin:0;padding:0;}
+
+/* ======== HTML & Body ::
+----------------------------------------------------------------- */
+html {font-size:100%;height:95%;}
+body {
+height:95%;
+font:75% Arial,Tahoma,Geneva,Helvetica,sans-serif;
+/*background:#fff;*/
+background-color: #123456;
+/*color:#333;*/
+color: #fff;
+margin-left: 15%;
+margin-right: 15%;
+margin-top: 1%;
+margin-bottom: 1%;
+/*background-image:url(../images/header_idiap.jpg);
+background-repeat:no-repeat;*/
+}
+
+/* ======== Links ::
+----------------------------------------------------------------- */
+a,a:visited {text-decoration:underline;}
+a:active, a:focus, a:hover {text-decoration:none;outline:none;}
+a img {border:none;}
+
+/* ======== Typography ::
+----------------------------------------------------------------- */
+/* ==== Resets for Nested elements
+- Helpful for Relative Font Size Sites (Not Needed for Fixed Font Size Sites) ==== */
+blockquote p, p blockquote, div div, div li, div p,div dt,div dd,
+li li, li li li,ul ul, p address, p pre, pre p,
+td address, td h1, td h2, td h3, td h4, td li, td dd, td dt, td p, td pre {font-size: 100%;}
+
+abbr,acronym {text-decoration: none;border:0}
+address, h1, h2, h3, h4, h5, h6, dd, dt, li, p, pre {padding:.6em 0;}
+h1 {font-size:2.2em; color:#909090 ;}
+h2 {font-size:1.8em;}
+h3 {font-size:1.6em;}
+h4 {font-size:1.4em;}
+h5 {font-size:1.2em;}
+h6 {font-size:1.1em;}
+address,blockquote,div,dd,dt,li,p,th,td {font-size:1.2em;}
+dt {font-weight:bold;}
+pre {font-size: 12px;}
+q:before,q:after {content:'';}
+
+/* ======== Lists ::
+----------------------------------------------------------------- */
+dl, ol, ul {margin-left: 20px;}
+li, ol, dd, dt {vertical-align:middle;list-style-position: inside;}
+
+/* ======== Tables ::
+----------------------------------------------------------------- */
+table {
+border:none;
+border-collapse:collapse;
+border-spacing:0;
+overflow:hidden;
+word-wrap:break-word;
+}
+caption, th, td {text-align: left;vertical-align:top;}
+
+/* ======== General Purpose Classes ::
+----------------------------------------------------------------- */
+.alignleft {text-align:left;}
+.alignright {text-align:right;}
+.center {text-align:center;}
+.clear {clear:both;padding:0;margin:0;line-height:0;}
+.external {/* if needed with new window JS */}
+.floatleft {float:left;}
+.floatright {float:right;}
+.hidden {display:none;}
+.inline {display:inline;}
+.large {font-size:20px;font-weight:bold;}
+.light {color:#999;}
+.png {/* if needed with png fix JS */}
+.small {font-size:10px;font-weight:normal;}
+.embed_collapsed { height: 27px; }
+.help { line-height: 0.5;font-size:0.8em}
+
+
+/* ======== Template ::
+----------------------------------------------------------------- */
+#wrap {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  top: 4%;
+}
+
+#header td { height: 50px; width: 600px; background-color: #CCCCEE;}
+#header p { padding: 0em; }
+
+#content { }
+#main {float:right;}
+#sidebar {float:left;}
+#footer {clear:both;}
+
+/* ======== Navigation ::
+----------------------------------------------------------------- */
+/* ==== Main Menu ==== */
+#menu ul {margin:0 auto; list-style: none;}
+#menu li {float: left;}
+#menu a {display: block;}
+
+	/* 2nd Tier Child Menu with accessible drop down method */
+	#menu li ul {position: absolute;top: -999em;left: -999em;}
+	#menu li:hover ul, #menu li.hover ul {top: auto;left: auto;}
+
+/* ==== Footer Menu ====- */
+#footer ul { }
+#footer li { }
+#footer li a { }
+#footer li a:active, #footer li a:focus, #footer li a:hover { }
+
+/* ======== Page Styles ::
+----------------------------------------------------------------- */
+#language {width:100%;text-align:right;padding:0;color:#FFF;background-color:#2C86C5;font-size:1.em;}
+#language a {color:#FFF;text-decoration:none;font-weight:bold;}
+#wrap h1 {
+font-size:2.4em;
+padding-top:0px;padding-bottom:0; 
+color:#636363;
+font-family:Arial,Helvetica,Verdana,"Lucida Grande",Lucida sans-serif;
+margin:0.75em 0 0.25em;
+}
+#powered {
+text-align:right;
+position:absolute;
+top:240px;
+left:180px;
+border-right:1px dashed #636363;
+padding-right:15px;
+width:130px;
+}
+#intro {margin-top:25px;margin-bottom:35px;font-size:1.4em;}
+#search {width:300px;}
+#search label { position: absolute; text-align:right; width:50px}
+#search input, select { margin-left: 10px; }
+#search input.check {width:100px;}
+#search textarea { margin-left: 60px; }
+
+#video {margin-top:25px;padding:0;background-position:center center;background-image:url(../images/grand_conseil.jpg);background-repeat:no-repeat;}
+#results {clear:both;margin-top:15px;float:left; width:100%;}
+#results h2 {padding:0;color:#FFF;background-color:#2C86C5;padding-left:8px;font-size:1.2em;}
+#results ul {list-style:none;margin-top:5px; margin-left:0;}
+#results a {color:#2200CC;}
+/*#navigation {width:100%;float:left;}*/
+#footer {width:100%;border-top:1px solid #ddd;margin-top:15px;padding-top:8px;float:left;}
+.dateTime {padding:2px;color:#636363;}
+.duration {padding:2px;color:#2200CC;}
+#searchForm {clear:both;padding-top:5px;padding-bottom:15px;font-size:1.2em;}
+#player {display: block; width: 300px; height: 240px;}
+#foundMessage {color:#636363;font-style:italic;font-size:1.2em;}
+
+#left {
+  position: relative;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+
+
+#right {
+  color: #333;
+  position: absolute;
+  top:60px;
+  left: 80%;
+  background-color: #FFFF99;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#title {
+	width:100%;
+	text-align:center;
+	margin-bottom:50px;
+}
+
+#sentence {
+	width:100%;
+	text-align:center;
+}
+
+#annotatedText {
+	margin-left:auto; 
+	margin-right:auto; 
+	text-align:left;
+	width:100%;
+
+	position: relative;
+	padding: 8px;
+	left: -8px;
+	color: #fff;
+	background-color: #194979;
+	margin-bottom: 10px;
+}
+
+input b {text-decoration:underline}
+
+
+/* ======== Forms ::
+----------------------------------------------------------------- */
+label {cursor:pointer;}
+fieldset {border:0;}
+input,label,select,textarea {
+line-height:1.2;
+vertical-align:baseline;
+font-size:inherit;
+font-family:inherit;
+}
+input[type="radio"], input[type="checkbox"] {position:relative;top:1.5px;}
+input[type="text"],textarea {padding:.2em;}
+textarea {overflow:auto;}
+
+/* ======== Other ::
+----------------------------------------------------------------- */
+
+

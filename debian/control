@@ -1,0 +1,12 @@
+Source: webvalidation
+Section: web
+Priority: optional
+Maintainer: Alexandre Nanchen <alexandre.nanchen@idiap.ch>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.9.3
+
+Package: webvalidation
+Architecture: all
+Depends: debconf, ${misc:Depends}, perl, libcgi-pm-perl, libappconfig-perl, libpq-dev, libdbd-pg-perl, sox
+Description: Web application to validate data.
+ Set of perl scripts to validate text transcription with audio.

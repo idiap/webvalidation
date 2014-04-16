@@ -1,0 +1,4 @@
+jPlayer is the completely free and open source (MIT) media library written in JavaScript.
+
+Please see http://www.opensource.org/licenses/MIT for more information.
+

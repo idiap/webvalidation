@@ -1,0 +1,109 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+DEB_VERSION := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
+DEB_NOEPOCH_VERSION := $(shell echo $(DEB_VERSION) | cut -d: -f2-)
+DEB_UPSTREAM_VERSION := $(shell echo $(DEB_NOEPOCH_VERSION) | sed 's/-[^-]*$$//')
+
+#INSTALL_PREFIX=validation-webappparlsite
+
+DEB_PACKAGE_SOURCE = webvalidation-src
+DEB_PACKAGE = webvalidation
+
+.PHONY: build clean install binary-indep binary-arch binary
+
+build: build-stamp
+
+build-stamp:
+	dh_testdir
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean build-stamp
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+	dh_installinit
+
+	# ... DEB_PACKAGE
+	#Application directory
+	mkdir -p debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE)/htdocs
+	#Static files
+	cp -r css debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE)/htdocs/.
+	cp -r images debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE)/htdocs/.
+	cp -r js debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE)/htdocs/.
+	
+	mkdir -p debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE)/scripts/
+	cp -r scripts/cgi/ debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE)/scripts/.
+	#Configuration file
+	mkdir -p debian/$(DEB_PACKAGE)/etc/$(DEB_PACKAGE)/
+	mkdir -p debian/$(DEB_PACKAGE)/etc/django/$(DEB_PACKAGE)/
+	cp webvalidation.conf debian/$(DEB_PACKAGE)/etc/$(DEB_PACKAGE)/webvalidation.conf
+	cp apache-include.conf debian/$(DEB_PACKAGE)/etc/$(DEB_PACKAGE)/
+	#cp apache-include.conf debian/$(DEB_PACKAGE)/etc/django/$(DEB_PACKAGE)/
+	#Dynamic data (directories) - used in the virtual environment
+	#mkdir -p debian/$(DEB_PACKAGE)/remote/data
+	#cp -r data debian/$(DEB_PACKAGE)/remote
+	
+
+# Build architecture-dependent files here.
+binary-arch: build install
+# We have nothing to do by default.
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installexamples
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+
+build-source-tarball:
+	dh_testdir
+	dh_clean build-stamp
+	# Create the source tarball
+	mkdir -p /tmp/$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)
+	cp -r * /tmp/$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)/.
+	tar -C /tmp -czf ../$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION).tar.gz $(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)
+	rm -rf /tmp/$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)
+
+build-install-tarball:
+	# WARNING: make install before-hand!
+	# Create the installation tarball
+	mkdir -p /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)
+	cp -rp debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE)/* /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)/.
+	cp -rp debian/$(DEB_PACKAGE)/etc/$(DEB_PACKAGE) /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)/etc
+	tar -C /tmp -czf ../$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION).tar.gz $(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)
+	rm -rf /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)
+
+build-data-tarball:
+	# WARNING: make install before-hand!
+	# Create the data tarball
+	mkdir -p /tmp/$(DEB_PACKAGE_DATA)-$(DEB_UPSTREAM_VERSION)
+	cp -rp debian/$(DEB_PACKAGE_DATA)/usr/share/$(DEB_PACKAGE)/* /tmp/$(DEB_PACKAGE_DATA)-$(DEB_UPSTREAM_VERSION)/.
+	tar -C /tmp -czf ../$(DEB_PACKAGE_DATA)-$(DEB_UPSTREAM_VERSION).tar.gz $(DEB_PACKAGE_DATA)-$(DEB_UPSTREAM_VERSION)
+	rm -rf /tmp/$(DEB_PACKAGE_DATA)-$(DEB_UPSTREAM_VERSION)
+
+debian-packages:
+	debuild -us -uc -b
+
+debian-source:
+	debuild -I'.git*' -us -uc -S
+
+release: debian-packages build-install-tarball build-data-tarball debian-source build-source-tarball
+
