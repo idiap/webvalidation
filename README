@@ -6,32 +6,34 @@ Alexandre Nanchen, Christine Marcel and Renato Martins
 
 Description
 -----------
-This software is a multi users, multi projects web annotation tool that help to organize
-the process of validating automatically generated transcriptions.
+This software is a multi users, multi projects web annotation tool that help to
+organize the process of validating automatically generated transcriptions.
 
-It was design for the purpose of annotating data in order to train an Automatic Speech
-Recognition System but can be use in a broader context.
+It was design for the purpose of annotating data in order to train an Automatic
+Speech Recognition System but can be use in a broader context.
 
-Users can login to the application and choose to work on specific data. The available
-data is partitioned into two pools: a first validation pool and a second validation pool. 
-This distinction allows for a two steps validation process thus increasing the quality 
-of the final result.
+Users can login to the application and choose to work on specific data. The
+available data is partitioned into two pools: a first validation pool and a
+second validation pool. This distinction allows for a two steps validation
+process thus increasing the quality of the final result.
 
-Each user has its own ‘user space’ showing on which data he is currently working.
+Each user has its own ‘user space’ showing on which data he is currently
+working.
 
-At the end of the two steps validation process, the validated data is moved to an 
-‘annotated space’.
+At the end of the two steps validation process, the validated data is moved to
+an ‘annotated space’.
 
 
 Upload and Configuration
 ------------------------
-The software is designed to run on debian like linux systems (i.e. ubuntu). Hence the
-usage of a debian package to install it on the server.
+The software is designed to run on debian like linux systems (i.e. ubuntu).
+Hence the usage of a debian package to install it on the server.
 
-Please have a look at the dependency list of the 'debian/control' file to check for 
-required packages.
+Please have a look at the dependency list of the 'debian/control' file to check
+for required packages.
 
-In addition of the code, there is a configuration file, named `webvalidation.conf`.
+In addition of the code, there is a configuration file, named
+`webvalidation.conf`.
 
 There are 3 fields you will need to change (comment/uncomment) in the file:
 
@@ -39,8 +41,8 @@ There are 3 fields you will need to change (comment/uncomment) in the file:
 - *db_config user*: username to access the database;
 - *db_config pass*: password to access the database.
 
-To upload and install the application to the server use the 'upload_server.sh' script
-after changing the relevant information at the beginning of the script.
+To upload and install the application to the server use the 'upload_server.sh'
+script after changing the relevant information at the beginning of the script.
 
 
 Database
@@ -51,55 +53,56 @@ To create it, use the 'webvalidation.sql' script.
 
 Then create the 'median' function using the median_function.sql script.
 
-The `median` function was taken from 
+The `median` function was taken from
 http://okbob.blogspot.ch/2009/11/aggregate-function-median-in-postgresql.html.
-Note that the array used in the function should be already ordered. Here's an example:
+Note that the array used in the function should be already ordered. Here's an
+example:
 
   select median(array(select a from milrows where a is not null order by a));
 
-Finally create an user belonging to the 'admin' group in the 'user' table with a
-password obtained using the 'salt' value configured into the 'webvalidation.conf'
-file:
-     perl -d -e 1
-     use Digest::SHA 'sha1_hex'
-     print sha1_ex('password','salt value')
+Finally create an user belonging to the 'admin' group in the 'user' table with
+a password obtained using the 'salt' value configured into the
+'webvalidation.conf' file: perl -d -e 1 use Digest::SHA 'sha1_hex' print
+sha1_ex('password','salt value')
 
-The table `"user"` needs the quotes because `user` is already a postgres system table. Each
-user has a unique username, a full name, an encrypted password, the project in which he is
-working on, and his group (eg. admin or intern).
+The table `"user"` needs the quotes because `user` is already a postgres system
+table. Each user has a unique username, a full name, an encrypted password, the
+project in which he is working on, and his group (eg. admin or intern).
 
-The purpose of the table `stats` is to record user usage. We record the filename that was
-validated, the level (first or second validation), at which time, the amount of time spent
-doing it (ie. the time the user has the validation tool opened in the browser), the length
-of the audio file and whether the user accepted the file or not. The `spent` and `wavtime`
-fields represent a duration in seconds.
+The purpose of the table `stats` is to record user usage. We record the
+filename that was validated, the level (first or second validation), at which
+time, the amount of time spent doing it (ie. the time the user has the
+validation tool opened in the browser), the length of the audio file and
+whether the user accepted the file or not. The `spent` and `wavtime` fields
+represent a duration in seconds.
 
 
 Web server
 ----------
-You need to configure the Apache web server to support perl CGI and activate the dbd module
-for database access. 
+You need to configure the Apache web server to support perl CGI and activate
+the dbd module for database access. 
 
-Then add in the default apache enable site (/etc/apache2/sites-enabled) an include to the 
-/etc/webvalidation/apache-include.conf file.
+Then add in the default apache enable site (/etc/apache2/sites-enabled) an
+include to the /etc/webvalidation/apache-include.conf file.
 
 Finally, open this URL in your browser:
 
-	http://servername/webapps/webvalidation/cgi/login.pl
+    http://servername/webapps/webvalidation/cgi/login.pl
 
-Some shortcut keys have been configured to work with Cromium-Browser, for example 'alt-a'
-to accept a transcription.
+Some shortcut keys have been configured to work with Cromium-Browser, for
+example 'alt-a' to accept a transcription.
 
-There is a statistic module to collect user data. This can be helpful to project how many
-people are needed to complete an annotation task. Please make sure that people are aware
-of it or if you feel uncomfortable with it, comment the 'Stats::create' call!
+There is a statistic module to collect user data. This can be helpful to
+project how many people are needed to complete an annotation task. Please make
+sure that people are aware of it or if you feel uncomfortable with it, comment
+the 'Stats::create' call!
 
 
 Annotation Data
 ---------------
 
-The `data` folder is configured in the 'webvalidation.conf' file and should have the
-following structure:
+The `data` folder is configured in the 'webvalidation.conf' file and should
+have the following structure:
 
 	data
 	├── project1
@@ -136,30 +139,31 @@ following structure:
 	.
 
 
-The owner group should be 'www-data' with rwx/rw permission (folders/files): the web
-server need the rights to move data in the folder structure.
+The owner group should be 'www-data' with rwx/rw permission (folders/files):
+the web server need the rights to move data in the folder structure.
 
 Modules
 -------
 Webvalidation.pm
 ~~~~~~~~~~~~~~~~
-This module loads the configuration file and has some generic functions to handle directories
-and files and print content in the webpages.
+This module loads the configuration file and has some generic functions to
+handle directories and files and print content in the webpages.
 
 CookieJar.pm
 ~~~~~~~~~~~~
-This module deals with cookies. It is used by the User module to login and logout users by
-setting a cookie with encrypted credentials.
+This module deals with cookies. It is used by the User module to login and
+logout users by setting a cookie with encrypted credentials.
 
 Database.pm
 ~~~~~~~~~~~
-This module provides several functions to interact with the database. You can either execute
-an SQL statement or use a higher level function to select, insert or update data.
+This module provides several functions to interact with the database. You can
+either execute an SQL statement or use a higher level function to select,
+insert or update data.
 
 User.pm
 ~~~~~~~
-This module handles users' authentication and some high level functions to interact with
-the database.
+This module handles users' authentication and some high level functions to
+interact with the database.
 
 Stats.pm
 ~~~~~~~~
@@ -167,8 +171,8 @@ This module deals with user statistics. It can insert and query the database.
 
 How to debug
 ------------
-The module `Data::Dumper` "stringifies" complex data structures, suitable to print.
-Example:
+The module `Data::Dumper` "stringifies" complex data structures, suitable to
+print.  Example:
 
 	use Data::Dumper;
 	print Dumper($string);
