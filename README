@@ -37,9 +37,9 @@ In addition of the code, there is a configuration file, named
 
 There are 3 fields you will need to change (comment/uncomment) in the file:
 
-- *website_url_domain*: URL of the application;
-- *db_config user*: username to access the database;
-- *db_config pass*: password to access the database.
+    - *website_url_domain*: URL of the application;
+    - *db_config user*: username to access the database;
+    - *db_config pass*: password to access the database.
 
 To upload and install the application to the server use the 'upload_server.sh'
 script after changing the relevant information at the beginning of the script.
@@ -51,7 +51,7 @@ The database used in the application runs in a PostgreSQL engine.
 
 To create it, use the 'webvalidation.sql' script.
 
-Then create the 'median' function using the median_function.sql script.
+Then create the 'median' function using the 'median_function.sql' script.
 
 The `median` function was taken from
 http://okbob.blogspot.ch/2009/11/aggregate-function-median-in-postgresql.html.
@@ -62,8 +62,11 @@ example:
 
 Finally create an user belonging to the 'admin' group in the 'user' table with
 a password obtained using the 'salt' value configured into the
-'webvalidation.conf' file: perl -d -e 1 use Digest::SHA 'sha1_hex' print
-sha1_ex('password','salt value')
+'webvalidation.conf' file: 
+
+    perl -d -e 1 
+    use Digest::SHA 'sha1_hex'
+    print sha1_ex('password','salt value')
 
 The table `"user"` needs the quotes because `user` is already a postgres system
 table. Each user has a unique username, a full name, an encrypted password, the
