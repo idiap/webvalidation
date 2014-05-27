@@ -248,8 +248,8 @@ sub move_directory {
 sub move_sentence {
 	my ($source, $file_basename, $destination) = @_;
 	# select the files to move
-	my $wav_file = "${source}/${file_basename}.wav";
-	my $txt_file = "${source}/${file_basename}.txt";
+	my $wav_file = "${source}/${file_basename}${wav_extension}";
+	my $txt_file = "${source}/${file_basename}${text_extension}";
 	my $result;
 	eval {
 		print STDERR "moving sentence: $source/$file_basename => $destination \n";
