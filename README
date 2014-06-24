@@ -66,7 +66,7 @@ a password obtained using the 'salt' value configured into the
 
     perl -d -e 1 
     use Digest::SHA 'sha1_hex'
-    print sha1_ex('password','salt value')
+    print sha1_hex('password','salt value')
 
 The table `"user"` needs the quotes because `user` is already a postgres system
 table. Each user has a unique username, a full name, an encrypted password, the
